@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 """
+[DEPRECATED - NOT NEEDED FOR CURRENT IMPLEMENTATION]
+
+The current index.html uses pure JavaScript/Leaflet.js and loads periodicals.json
+directly in the browser. This Python script is kept for reference only.
+
+To update the map, simply edit periodicals.json - no need to run this script.
+
+---
+
 Generate an interactive map of African American newspapers across the United States.
 This script creates a self-contained HTML file suitable for deployment on GitHub Pages.
 """

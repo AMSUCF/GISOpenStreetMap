@@ -16,9 +16,9 @@ This project creates an interactive dashboard that displays the geographic locat
 
 ## Files
 
-- `index.html` - Main interactive map (ready for GitHub Pages deployment)
+- `index.html` - Main interactive map (pure JavaScript - ready for GitHub Pages deployment)
 - `periodicals.json` - Geolocation data for all 20 newspapers
-- `create_map.py` - Python script to generate the interactive map
+- `create_map.py` - [DEPRECATED] Python script (not needed - kept for reference only)
 - `claude.md` - OpenStreetMap data extraction planning document
 
 ## Newspapers Included
@@ -48,13 +48,11 @@ The map features 20 African American newspapers including:
 
 ## Technology Stack
 
-- **Python**: Data processing and map generation
-  - `folium` - Interactive map creation
-  - `json` - Data handling
-- **JavaScript/HTML/CSS**: Frontend interface
-- **Leaflet.js**: Underlying mapping library
+- **JavaScript/HTML/CSS**: Frontend interface (pure client-side, no build process required)
+- **Leaflet.js**: Interactive mapping library
 - **OpenStreetMap**: Map tiles and data
 - **Font Awesome**: Icons
+- **JSON**: Static data storage
 
 ## Deployment
 
@@ -67,17 +65,13 @@ This project is designed for deployment on GitHub Pages:
 
 ## Local Development
 
-To regenerate the map:
+No build process required! Simply:
 
-```bash
-# Install dependencies
-pip install folium
+1. Open `index.html` in your web browser to view the map locally
+2. To add or update newspapers, edit `periodicals.json`
+3. Refresh the browser to see changes
 
-# Generate the map
-python create_map.py
-```
-
-The script will read `periodicals.json` and generate `index.html`.
+The map loads data dynamically from `periodicals.json` using JavaScript.
 
 ## Data Sources
 
@@ -93,8 +87,8 @@ This project uses OpenStreetMap data, which is © OpenStreetMap contributors and
 
 To add more newspapers or update information:
 
-1. Edit `periodicals.json` with the new data
-2. Run `python create_map.py` to regenerate the map
+1. Edit `periodicals.json` with the new data (include name, city, state, address, latitude, longitude, founded_year, status, website)
+2. Test by opening `index.html` in your browser
 3. Submit a pull request
 
 ## Acknowledgments
