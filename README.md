@@ -1,50 +1,47 @@
 # African American Newspapers Interactive Map
 
-An interactive web-based map showcasing 20 historic and active African American newspapers across the United States.
+An interactive web-based map showcasing 50 African American newspapers across the United States - including 20 currently active publications and 30 historical newspapers that have ceased publication.
 
 ## Overview
 
-This project creates an interactive dashboard that displays the geographic locations of prominent African American newspapers throughout the United States. The map includes both historically significant and currently active publications, highlighting their important role in journalism and community engagement.
+This project creates an interactive dashboard that displays the geographic locations of prominent African American newspapers throughout the United States. The map includes both historically significant newspapers and currently active publications, highlighting their important role in journalism, community engagement, and documenting African American history from 1827 to the present day.
 
 ## Features
 
 - **Interactive Map**: Click on markers to view detailed information about each newspaper
-- **Sidebar Navigation**: Browse and select newspapers from a searchable list
+- **Color-Coded Markers**: Green markers for active newspapers, gray markers for ceased publications
+- **Circulation Dates**: View complete publication history with founding and cessation dates
+- **Sidebar Navigation**: Browse and select newspapers from a searchable list with years
 - **Responsive Design**: Works on desktop and mobile devices
 - **City-Level Views**: Zoom in to see each newspaper's location in detail
-- **Historical Context**: View founding years and publication status
+- **Historical Context**: Spanning from 1827 (Freedom's Journal) to present day publications
 
 ## Files
 
 - `index.html` - Main interactive map (pure JavaScript - ready for GitHub Pages deployment)
-- `periodicals.json` - Geolocation data for all 20 newspapers
+- `periodicals.json` - Geolocation data for all 50 newspapers (20 active, 30 historical)
 - `create_map.py` - [DEPRECATED] Python script (not needed - kept for reference only)
 - `claude.md` - OpenStreetMap data extraction planning document
 
 ## Newspapers Included
 
-The map features 20 African American newspapers including:
+The map features 50 African American newspapers across the United States:
 
-1. The Philadelphia Tribune (1884) - Philadelphia, PA
-2. The Indianapolis Recorder (1895) - Indianapolis, IN
-3. The Afro-American (1892) - Baltimore, MD
-4. The Chicago Defender (1905) - Chicago, IL
-5. The Pittsburgh Courier (1907) - Pittsburgh, PA
-6. The Amsterdam News (1909) - New York, NY
-7. The Miami Times (1923) - Miami, FL
-8. The Atlanta Daily World (1928) - Atlanta, GA
-9. The Cleveland Call and Post (1928) - Cleveland, OH
-10. The St. Louis American (1928) - St. Louis, MO
-11. The Houston Defender (1930) - Houston, TX
-12. Los Angeles Sentinel (1933) - Los Angeles, CA
-13. The Michigan Chronicle (1936) - Detroit, MI
-14. The Memphis Tri-State Defender (1951) - Memphis, TN
-15. The Sacramento Observer (1962) - Sacramento, CA
-16. The Washington Informer (1964) - Washington, DC
-17. The New Orleans Data News Weekly (1966) - New Orleans, LA
-18. The Seattle Medium (1970) - Seattle, WA
-19. The Charlotte Post (1878) - Charlotte, NC
-20. The Dallas Examiner (1986) - Dallas, TX
+### Active Newspapers (20)
+Including The Philadelphia Tribune (1884-), The Chicago Defender (1905-), The Amsterdam News (1909-), The Afro-American (1892-), Los Angeles Sentinel (1933-), and 15 others currently in circulation.
+
+### Historical Newspapers (30)
+Including pioneering publications like:
+- **Freedom's Journal** (1827-1829) - The first African American newspaper in the United States
+- **The North Star** (1847-1851) - Founded by Frederick Douglass
+- **The California Eagle** (1879-1964) - Los Angeles
+- **The New York Age** (1887-1960)
+- **The Cleveland Gazette** (1883-1945)
+- **The Boston Guardian** (1901-1957)
+- **The Chicago Whip** (1919-1939)
+- And 23 other historically significant publications that documented African American life and the civil rights movement
+
+The newspapers span across major cities including New York, Chicago, Los Angeles, Philadelphia, Detroit, Atlanta, Houston, Baltimore, Washington DC, and many others, representing diverse regions and communities throughout American history.
 
 ## Technology Stack
 
@@ -87,7 +84,10 @@ This project uses OpenStreetMap data, which is © OpenStreetMap contributors and
 
 To add more newspapers or update information:
 
-1. Edit `periodicals.json` with the new data (include name, city, state, address, latitude, longitude, founded_year, status, website)
+1. Edit `periodicals.json` with the new data:
+   - Required fields: name, city, state, address, latitude, longitude, founded_year, status
+   - Optional fields: ceased_year (for historical newspapers), website (for active newspapers)
+   - Status should be either "active" or "ceased"
 2. Test by opening `index.html` in your browser
 3. Submit a pull request
 

@@ -265,7 +265,7 @@
 <body>
     <div class="header">
         <h1>African American Newspapers in the United States</h1>
-        <p>Exploring the legacy and locations of 20 historic and active African American periodicals</p>
+        <p>Exploring the legacy and locations of 50 African American periodicals - 20 active and 30 historical newspapers</p>
     </div>
 
     <button class="toggle-sidebar" onclick="toggleSidebar()">
@@ -290,8 +290,12 @@
             <div class="legend">
                 <h4><i class="fa fa-info-circle"></i> Legend</h4>
                 <div class="legend-item">
-                    <div class="legend-icon"></div>
-                    <span>African American Newspaper</span>
+                    <div class="legend-icon" style="background: #2ecc71;"></div>
+                    <span>Active Newspaper</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #95a5a6;"></div>
+                    <span>Ceased Publication</span>
                 </div>
             </div>
         </div>
@@ -316,10 +320,18 @@
         const markers = {};
         let newspapers = [];
 
-        // Custom icon
-        const customIcon = L.divIcon({
+        // Custom icons for active and ceased newspapers
+        const activeIcon = L.divIcon({
             className: 'custom-marker',
-            html: '<div style="background-color: #a94442; width: 25px; height: 25px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>',
+            html: '<div style="background-color: #2ecc71; width: 25px; height: 25px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>',
+            iconSize: [25, 25],
+            iconAnchor: [12, 12],
+            popupAnchor: [0, -12]
+        });
+
+        const ceasedIcon = L.divIcon({
+            className: 'custom-marker',
+            html: '<div style="background-color: #95a5a6; width: 25px; height: 25px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>',
             iconSize: [25, 25],
             iconAnchor: [12, 12],
             popupAnchor: [0, -12]
@@ -341,20 +353,33 @@
 
         function createMarkers(newspapers) {
             newspapers.forEach(newspaper => {
+                // Determine circulation dates
+                const circulationDates = newspaper.ceased_year
+                    ? `${newspaper.founded_year} - ${newspaper.ceased_year}`
+                    : `Active since ${newspaper.founded_year}`;
+
+                // Create website link if available
+                const websiteLink = newspaper.website && newspaper.website !== ''
+                    ? `<p><a href="${newspaper.website}" target="_blank">Visit Website</a></p>`
+                    : '';
+
                 // Create popup content
                 const popupContent = `
                     <div class="popup-content">
                         <h4>${newspaper.name}</h4>
                         <p><strong>Location:</strong> ${newspaper.city}, ${newspaper.state}</p>
-                        <p><strong>Founded:</strong> ${newspaper.founded_year}</p>
+                        <p><strong>Circulation:</strong> ${circulationDates}</p>
                         <p><strong>Status:</strong> ${newspaper.status.charAt(0).toUpperCase() + newspaper.status.slice(1)}</p>
-                        <p><a href="${newspaper.website}" target="_blank">Visit Website</a></p>
+                        ${websiteLink}
                     </div>
                 `;
 
+                // Choose icon based on status
+                const icon = newspaper.status === 'active' ? activeIcon : ceasedIcon;
+
                 // Create marker
                 const marker = L.marker([newspaper.latitude, newspaper.longitude], {
-                    icon: customIcon,
+                    icon: icon,
                     title: newspaper.name
                 })
                 .bindPopup(popupContent)
@@ -373,11 +398,15 @@
             const sorted = newspapers.sort((a, b) => a.name.localeCompare(b.name));
 
             sorted.forEach(newspaper => {
+                const circulationYears = newspaper.ceased_year
+                    ? `(${newspaper.founded_year}-${newspaper.ceased_year})`
+                    : `(${newspaper.founded_year}-)`;
+
                 const item = document.createElement('div');
                 item.className = 'newspaper-item';
                 item.innerHTML = `
                     <div class="newspaper-name">${newspaper.name}</div>
-                    <div class="newspaper-location">${newspaper.city}, ${newspaper.state}</div>
+                    <div class="newspaper-location">${newspaper.city}, ${newspaper.state} ${circulationYears}</div>
                 `;
                 item.onclick = () => flyToNewspaper(newspaper);
                 list.appendChild(item);
