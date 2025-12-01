@@ -92,6 +92,100 @@
             background: #5568d3;
         }
 
+        .timeline-filter {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .year-display {
+            font-size: 18px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .active-count {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .timeline-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e9ecef;
+            outline: none;
+            -webkit-appearance: none;
+            margin: 10px 0;
+        }
+
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .timeline-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .timeline-slider::-webkit-slider-thumb:hover {
+            background: #5568d3;
+        }
+
+        .timeline-slider::-moz-range-thumb:hover {
+            background: #5568d3;
+        }
+
+        .timeline-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .reset-timeline-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: underline;
+            padding: 0;
+        }
+
+        .reset-timeline-btn:hover {
+            color: #5568d3;
+        }
+
         .newspaper-list {
             padding: 10px;
         }
@@ -279,6 +373,20 @@
                 <button class="view-all-btn" onclick="viewAll()">
                     <i class="fa fa-globe"></i> View All Locations
                 </button>
+
+                <div class="timeline-filter">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Filter by Year</span>
+                        <span class="year-display" id="yearDisplay">All Years</span>
+                    </div>
+                    <input type="range" min="1827" max="2025" value="2025" class="timeline-slider" id="yearSlider">
+                    <div class="timeline-controls">
+                        <span>1827</span>
+                        <button class="reset-timeline-btn" onclick="resetTimeline()">Show All Years</button>
+                        <span>2025</span>
+                    </div>
+                    <div class="active-count" id="activeCount">Showing all 50 newspapers</div>
+                </div>
             </div>
             <div class="newspaper-list" id="newspaperList">
                 <div class="loading">Loading newspapers...</div>
@@ -319,6 +427,7 @@
         // Store markers for later reference
         const markers = {};
         let newspapers = [];
+        let currentYear = null; // null means show all years
 
         // Custom icons for active and ceased newspapers
         const activeIcon = L.divIcon({
@@ -337,6 +446,58 @@
             popupAnchor: [0, -12]
         });
 
+        // Check if a newspaper was active in a given year
+        function isActiveInYear(newspaper, year) {
+            if (year === null) return true; // Show all if no year filter
+
+            const founded = newspaper.founded_year;
+            const ceased = newspaper.ceased_year;
+
+            if (ceased) {
+                // Newspaper has ceased - check if year is within range
+                return year >= founded && year <= ceased;
+            } else {
+                // Newspaper is still active - check if year is after founding
+                return year >= founded;
+            }
+        }
+
+        // Filter newspapers by year
+        function filterByYear(year) {
+            currentYear = year;
+
+            // Update year display
+            const yearDisplay = document.getElementById('yearDisplay');
+            yearDisplay.textContent = year === null ? 'All Years' : year;
+
+            // Filter and display newspapers
+            const filtered = year === null
+                ? newspapers
+                : newspapers.filter(n => isActiveInYear(n, year));
+
+            displayNewspapers(filtered);
+
+            // Update markers visibility
+            Object.keys(markers).forEach(name => {
+                const newspaper = newspapers.find(n => n.name === name);
+                if (newspaper) {
+                    if (year === null || isActiveInYear(newspaper, year)) {
+                        markers[name].addTo(map);
+                    } else {
+                        map.removeLayer(markers[name]);
+                    }
+                }
+            });
+
+            // Update count
+            const activeCount = document.getElementById('activeCount');
+            if (year === null) {
+                activeCount.textContent = `Showing all ${newspapers.length} newspapers`;
+            } else {
+                activeCount.textContent = `${filtered.length} newspaper${filtered.length !== 1 ? 's' : ''} active in ${year}`;
+            }
+        }
+
         // Load and display newspapers
         fetch('periodicals.json')
             .then(response => response.json())
@@ -344,6 +505,12 @@
                 newspapers = data;
                 displayNewspapers(data);
                 createMarkers(data);
+
+                // Set up timeline slider
+                const slider = document.getElementById('yearSlider');
+                slider.addEventListener('input', function() {
+                    filterByYear(parseInt(this.value));
+                });
             })
             .catch(error => {
                 console.error('Error loading periodicals:', error);
@@ -450,6 +617,15 @@
 
             // Close all popups
             map.closePopup();
+        }
+
+        function resetTimeline() {
+            // Reset slider to max value (2025)
+            const slider = document.getElementById('yearSlider');
+            slider.value = 2025;
+
+            // Reset filter to show all
+            filterByYear(null);
         }
 
         function toggleSidebar() {
