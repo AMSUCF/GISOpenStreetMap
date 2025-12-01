@@ -1,0 +1,1340 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>African American Newspapers in the United States</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 30px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .header h1 {
+                margin: 0;
+                font-size: 28px;
+                font-weight: 600;
+            }
+
+            .header p {
+                margin: 5px 0 0 0;
+                font-size: 14px;
+                opacity: 0.9;
+            }
+
+            .container {
+                display: flex;
+                height: calc(100vh - 100px);
+            }
+
+            .sidebar {
+                width: 350px;
+                background: #f8f9fa;
+                overflow-y: auto;
+                border-right: 1px solid #dee2e6;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            }
+
+            .sidebar-header {
+                padding: 20px;
+                background: white;
+                border-bottom: 2px solid #e9ecef;
+            }
+
+            .sidebar-header h2 {
+                margin: 0 0 10px 0;
+                font-size: 18px;
+                color: #2c3e50;
+            }
+
+            .view-all-btn {
+                width: 100%;
+                padding: 10px;
+                background: #667eea;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .view-all-btn:hover {
+                background: #5568d3;
+            }
+
+            .newspaper-item {
+                padding: 15px 20px;
+                border-bottom: 1px solid #e9ecef;
+                cursor: pointer;
+                transition: all 0.3s;
+                background: white;
+                margin: 5px 10px;
+                border-radius: 5px;
+            }
+
+            .newspaper-item:hover {
+                background: #e3f2fd;
+                transform: translateX(5px);
+            }
+
+            .newspaper-name {
+                font-weight: 600;
+                color: #2c3e50;
+                font-size: 15px;
+                margin-bottom: 5px;
+            }
+
+            .newspaper-location {
+                font-size: 13px;
+                color: #7f8c8d;
+            }
+
+            .map-container {
+                flex: 1;
+                position: relative;
+            }
+
+            #map {
+                width: 100%;
+                height: 100%;
+            }
+
+            .legend {
+                position: absolute;
+                bottom: 30px;
+                right: 30px;
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 1000;
+                font-size: 13px;
+            }
+
+            .legend h4 {
+                margin: 0 0 10px 0;
+                font-size: 14px;
+                color: #2c3e50;
+            }
+
+            .legend-item {
+                margin: 5px 0;
+                display: flex;
+                align-items: center;
+            }
+
+            .legend-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                background: #a94442;
+                border-radius: 50%;
+            }
+
+            @media (max-width: 768px) {
+                .sidebar {
+                    width: 100%;
+                    height: 300px;
+                    border-right: none;
+                    border-bottom: 1px solid #dee2e6;
+                }
+
+                .container {
+                    flex-direction: column;
+                }
+
+                .header h1 {
+                    font-size: 20px;
+                }
+            }
+        </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/></head>
+    <body>
+        <div class="header">
+            <h1>African American Newspapers in the United States</h1>
+            <p>Exploring the legacy and locations of 20 historic and active African American periodicals</p>
+        </div>
+
+        <div class="container">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Select a Newspaper</h2>
+                    <button class="view-all-btn" onclick="viewAll()">
+                        <i class="fa fa-globe"></i> View All Locations
+                    </button>
+                </div>
+                <div class="newspaper-list">
+                    
+        <div class="newspaper-item" onclick="flyToLocation(34.0097, -118.3353, 'Los Angeles Sentinel')">
+            <div class="newspaper-name">Los Angeles Sentinel</div>
+            <div class="newspaper-location">Los Angeles, California</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(39.3013, -76.6241, 'The Afro-American')">
+            <div class="newspaper-name">The Afro-American</div>
+            <div class="newspaper-location">Baltimore, Maryland</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(40.8089, -73.9537, 'The Amsterdam News')">
+            <div class="newspaper-name">The Amsterdam News</div>
+            <div class="newspaper-location">New York, New York</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(33.7558, -84.3802, 'The Atlanta Daily World')">
+            <div class="newspaper-name">The Atlanta Daily World</div>
+            <div class="newspaper-location">Atlanta, Georgia</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(35.2074, -80.8715, 'The Charlotte Post')">
+            <div class="newspaper-name">The Charlotte Post</div>
+            <div class="newspaper-location">Charlotte, North Carolina</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(41.8129, -87.6167, 'The Chicago Defender')">
+            <div class="newspaper-name">The Chicago Defender</div>
+            <div class="newspaper-location">Chicago, Illinois</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(41.4747, -81.6055, 'The Cleveland Call and Post')">
+            <div class="newspaper-name">The Cleveland Call and Post</div>
+            <div class="newspaper-location">Cleveland, Ohio</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(32.7762, -96.7767, 'The Dallas Examiner')">
+            <div class="newspaper-name">The Dallas Examiner</div>
+            <div class="newspaper-location">Dallas, Texas</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(29.7214, -95.377, 'The Houston Defender')">
+            <div class="newspaper-name">The Houston Defender</div>
+            <div class="newspaper-location">Houston, Texas</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(39.8089, -86.1156, 'The Indianapolis Recorder')">
+            <div class="newspaper-name">The Indianapolis Recorder</div>
+            <div class="newspaper-location">Indianapolis, Indiana</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(35.1427, -90.0498, 'The Memphis Tri-State Defender')">
+            <div class="newspaper-name">The Memphis Tri-State Defender</div>
+            <div class="newspaper-location">Memphis, Tennessee</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(25.8238, -80.2107, 'The Miami Times')">
+            <div class="newspaper-name">The Miami Times</div>
+            <div class="newspaper-location">Miami, Florida</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(42.349, -83.0628, 'The Michigan Chronicle')">
+            <div class="newspaper-name">The Michigan Chronicle</div>
+            <div class="newspaper-location">Detroit, Michigan</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(29.9368, -90.1026, 'The New Orleans Data News Weekly')">
+            <div class="newspaper-name">The New Orleans Data News Weekly</div>
+            <div class="newspaper-location">New Orleans, Louisiana</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(39.9423, -75.1685, 'The Philadelphia Tribune')">
+            <div class="newspaper-name">The Philadelphia Tribune</div>
+            <div class="newspaper-location">Philadelphia, Pennsylvania</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(40.4301, -79.9875, 'The Pittsburgh Courier')">
+            <div class="newspaper-name">The Pittsburgh Courier</div>
+            <div class="newspaper-location">Pittsburgh, Pennsylvania</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(38.5515, -121.4655, 'The Sacramento Observer')">
+            <div class="newspaper-name">The Sacramento Observer</div>
+            <div class="newspaper-location">Sacramento, California</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(47.599, -122.2988, 'The Seattle Medium')">
+            <div class="newspaper-name">The Seattle Medium</div>
+            <div class="newspaper-location">Seattle, Washington</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(38.6362, -90.2589, 'The St. Louis American')">
+            <div class="newspaper-name">The St. Louis American</div>
+            <div class="newspaper-location">St. Louis, Missouri</div>
+        </div>
+        
+        <div class="newspaper-item" onclick="flyToLocation(38.8457, -76.9941, 'The Washington Informer')">
+            <div class="newspaper-name">The Washington Informer</div>
+            <div class="newspaper-location">Washington, District of Columbia</div>
+        </div>
+        
+                </div>
+            </div>
+
+            <div class="map-container">
+                <div class="folium-map" id="map_ff657766c271500b66948f1a2a1ee9ec" ></div>
+                <div class="legend">
+                    <h4><i class="fa fa-info-circle"></i> Legend</h4>
+                    <div class="legend-item">
+                        <div class="legend-icon"></div>
+                        <span>African American Newspaper</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // This will be populated by Folium
+            var map = null;
+
+            function flyToLocation(lat, lng, name) {
+                if (map) {
+                    map.flyTo([lat, lng], 12, {
+                        duration: 1.5
+                    });
+                }
+            }
+
+            function viewAll() {
+                if (map) {
+                    map.flyTo([39.8283, -98.5795], 4, {
+                        duration: 1.5
+                    });
+                }
+            }
+
+            // Wait for map to be initialized by Folium
+            setTimeout(function() {
+                // Get the Folium map object
+                var mapElements = document.querySelectorAll('.folium-map');
+                if (mapElements.length > 0) {
+                    var mapId = mapElements[0].id;
+                    map = window[mapId];
+                }
+            }, 1000);
+        </script>
+    <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/></head>
+<body>
+    
+    
+            <div class="folium-map" id="map_ff657766c271500b66948f1a2a1ee9ec" ></div>
+        
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script></body>
+<script>
+    
+    
+            var map_ff657766c271500b66948f1a2a1ee9ec = L.map(
+                "map_ff657766c271500b66948f1a2a1ee9ec",
+                {
+                    center: [39.8283, -98.5795],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 4,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a5fad60e54b424030dbffc44156ea270 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "OpenStreetMap",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a5fad60e54b424030dbffc44156ea270.addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var marker_7dbae2be43f2efaa924a3f5530686166 = L.marker(
+                [41.8129, -87.6167],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_a818df1b64b7d0721e755fbd29f3ece1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fd9b357e16b96005f6934773dbdea277 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_67b1d55edec30a858216b8b7eb3ca6dc = $(`<div id="html_67b1d55edec30a858216b8b7eb3ca6dc" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Chicago Defender</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Chicago, Illinois</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1905</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://chicagodefender.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_fd9b357e16b96005f6934773dbdea277.setContent(html_67b1d55edec30a858216b8b7eb3ca6dc);
+            
+        
+
+        marker_7dbae2be43f2efaa924a3f5530686166.bindPopup(popup_fd9b357e16b96005f6934773dbdea277)
+        ;
+
+        
+    
+    
+            marker_7dbae2be43f2efaa924a3f5530686166.bindTooltip(
+                `<div>
+                     The Chicago Defender
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7dbae2be43f2efaa924a3f5530686166.setIcon(icon_a818df1b64b7d0721e755fbd29f3ece1);
+            
+    
+            var marker_319ea381a1c9ac56534bf015da088af9 = L.marker(
+                [40.8089, -73.9537],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_5b6ec13d05d0ef169265e7389935131e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a5de751b2a9a88c1339aa0e1131dcca7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_64a871353e38ebb21c16b8a0bba521a2 = $(`<div id="html_64a871353e38ebb21c16b8a0bba521a2" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Amsterdam News</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> New York, New York</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1909</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://amsterdamnews.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_a5de751b2a9a88c1339aa0e1131dcca7.setContent(html_64a871353e38ebb21c16b8a0bba521a2);
+            
+        
+
+        marker_319ea381a1c9ac56534bf015da088af9.bindPopup(popup_a5de751b2a9a88c1339aa0e1131dcca7)
+        ;
+
+        
+    
+    
+            marker_319ea381a1c9ac56534bf015da088af9.bindTooltip(
+                `<div>
+                     The Amsterdam News
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_319ea381a1c9ac56534bf015da088af9.setIcon(icon_5b6ec13d05d0ef169265e7389935131e);
+            
+    
+            var marker_caec258a26f8104da077c2824bd44c39 = L.marker(
+                [39.9423, -75.1685],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_6d1807dcd8a3a30436a8bb678395074e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_569d5a071f49afac237e35d8196ddca6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b9935cd407295729ac400a9bac899c4b = $(`<div id="html_b9935cd407295729ac400a9bac899c4b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Philadelphia Tribune</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Philadelphia, Pennsylvania</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1884</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.phillytrib.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_569d5a071f49afac237e35d8196ddca6.setContent(html_b9935cd407295729ac400a9bac899c4b);
+            
+        
+
+        marker_caec258a26f8104da077c2824bd44c39.bindPopup(popup_569d5a071f49afac237e35d8196ddca6)
+        ;
+
+        
+    
+    
+            marker_caec258a26f8104da077c2824bd44c39.bindTooltip(
+                `<div>
+                     The Philadelphia Tribune
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_caec258a26f8104da077c2824bd44c39.setIcon(icon_6d1807dcd8a3a30436a8bb678395074e);
+            
+    
+            var marker_dca97a123d03406d99d6a875d1ea9ce4 = L.marker(
+                [33.7558, -84.3802],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_e01b1360b1601cb1e2e9e09c1cd412c2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4199310f5053d0e7b94b108c145a06e8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ea37990a1ea0c069a1ac5baf7807bd9b = $(`<div id="html_ea37990a1ea0c069a1ac5baf7807bd9b" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Atlanta Daily World</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Atlanta, Georgia</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1928</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://atlantadailyworld.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_4199310f5053d0e7b94b108c145a06e8.setContent(html_ea37990a1ea0c069a1ac5baf7807bd9b);
+            
+        
+
+        marker_dca97a123d03406d99d6a875d1ea9ce4.bindPopup(popup_4199310f5053d0e7b94b108c145a06e8)
+        ;
+
+        
+    
+    
+            marker_dca97a123d03406d99d6a875d1ea9ce4.bindTooltip(
+                `<div>
+                     The Atlanta Daily World
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_dca97a123d03406d99d6a875d1ea9ce4.setIcon(icon_e01b1360b1601cb1e2e9e09c1cd412c2);
+            
+    
+            var marker_c1bd34269ebbdf7660a25be0ee082c5c = L.marker(
+                [39.3013, -76.6241],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_634e0c7d44cb809999497f153ab03446 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_25c97d284f0ad3df91f89a73dea1e8e7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_78ce977c69a78982b2ee790db49a6674 = $(`<div id="html_78ce977c69a78982b2ee790db49a6674" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Afro-American</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Baltimore, Maryland</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1892</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://afro.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_25c97d284f0ad3df91f89a73dea1e8e7.setContent(html_78ce977c69a78982b2ee790db49a6674);
+            
+        
+
+        marker_c1bd34269ebbdf7660a25be0ee082c5c.bindPopup(popup_25c97d284f0ad3df91f89a73dea1e8e7)
+        ;
+
+        
+    
+    
+            marker_c1bd34269ebbdf7660a25be0ee082c5c.bindTooltip(
+                `<div>
+                     The Afro-American
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c1bd34269ebbdf7660a25be0ee082c5c.setIcon(icon_634e0c7d44cb809999497f153ab03446);
+            
+    
+            var marker_28e52553aff60c00ba57d68d126f57c4 = L.marker(
+                [34.0097, -118.3353],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_d02a744375b8ff63aba301dfc1a50efc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e7c2378ff8713a0ed58f751f5c38c73f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_328e96c9d772f43143a2f5cba74b5bc4 = $(`<div id="html_328e96c9d772f43143a2f5cba74b5bc4" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">Los Angeles Sentinel</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Los Angeles, California</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1933</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://lasentinel.net" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_e7c2378ff8713a0ed58f751f5c38c73f.setContent(html_328e96c9d772f43143a2f5cba74b5bc4);
+            
+        
+
+        marker_28e52553aff60c00ba57d68d126f57c4.bindPopup(popup_e7c2378ff8713a0ed58f751f5c38c73f)
+        ;
+
+        
+    
+    
+            marker_28e52553aff60c00ba57d68d126f57c4.bindTooltip(
+                `<div>
+                     Los Angeles Sentinel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_28e52553aff60c00ba57d68d126f57c4.setIcon(icon_d02a744375b8ff63aba301dfc1a50efc);
+            
+    
+            var marker_db768a0ec175f25aec48f7830fd615fd = L.marker(
+                [29.7214, -95.377],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_fe9c7133d2eea3dd5b3ef43d94755558 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e28a0aec3978adbb5c01d28f815c5bf2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_92d8bf69f9bdb05c8f7644317a2ef999 = $(`<div id="html_92d8bf69f9bdb05c8f7644317a2ef999" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Houston Defender</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Houston, Texas</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1930</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.houstondefender.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_e28a0aec3978adbb5c01d28f815c5bf2.setContent(html_92d8bf69f9bdb05c8f7644317a2ef999);
+            
+        
+
+        marker_db768a0ec175f25aec48f7830fd615fd.bindPopup(popup_e28a0aec3978adbb5c01d28f815c5bf2)
+        ;
+
+        
+    
+    
+            marker_db768a0ec175f25aec48f7830fd615fd.bindTooltip(
+                `<div>
+                     The Houston Defender
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_db768a0ec175f25aec48f7830fd615fd.setIcon(icon_fe9c7133d2eea3dd5b3ef43d94755558);
+            
+    
+            var marker_409feaf2361ebf6c6c1fe700d57ea1f3 = L.marker(
+                [25.8238, -80.2107],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_ae69ddaf182eb659d28d0d832e30fe61 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a8c92b74312d92d84c7b672865575858 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_daf2dfb7fb00a4a85a53f899f96b5d81 = $(`<div id="html_daf2dfb7fb00a4a85a53f899f96b5d81" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Miami Times</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Miami, Florida</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1923</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.miamitimesonline.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_a8c92b74312d92d84c7b672865575858.setContent(html_daf2dfb7fb00a4a85a53f899f96b5d81);
+            
+        
+
+        marker_409feaf2361ebf6c6c1fe700d57ea1f3.bindPopup(popup_a8c92b74312d92d84c7b672865575858)
+        ;
+
+        
+    
+    
+            marker_409feaf2361ebf6c6c1fe700d57ea1f3.bindTooltip(
+                `<div>
+                     The Miami Times
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_409feaf2361ebf6c6c1fe700d57ea1f3.setIcon(icon_ae69ddaf182eb659d28d0d832e30fe61);
+            
+    
+            var marker_34d6b85a187852916de5fcc0fe7f89b9 = L.marker(
+                [42.349, -83.0628],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_99f7792125aa78e1f281278604c46665 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f8aed21840ac13d247a54180358facbe = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_510f45e0f9e9722d58876ee0f6e47aad = $(`<div id="html_510f45e0f9e9722d58876ee0f6e47aad" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Michigan Chronicle</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Detroit, Michigan</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1936</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://michiganchronicle.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_f8aed21840ac13d247a54180358facbe.setContent(html_510f45e0f9e9722d58876ee0f6e47aad);
+            
+        
+
+        marker_34d6b85a187852916de5fcc0fe7f89b9.bindPopup(popup_f8aed21840ac13d247a54180358facbe)
+        ;
+
+        
+    
+    
+            marker_34d6b85a187852916de5fcc0fe7f89b9.bindTooltip(
+                `<div>
+                     The Michigan Chronicle
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_34d6b85a187852916de5fcc0fe7f89b9.setIcon(icon_99f7792125aa78e1f281278604c46665);
+            
+    
+            var marker_d4fca6f17b4c133df88eec76c68a02ea = L.marker(
+                [32.7762, -96.7767],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_3797096fb2d2c07d7278a51464229e40 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c5aca0a21aa90ee32418f5bcbaebe4dc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9aff781a4edbe7ec410dc7e1c9dba637 = $(`<div id="html_9aff781a4edbe7ec410dc7e1c9dba637" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Dallas Examiner</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Dallas, Texas</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1986</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.dallasexaminer.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_c5aca0a21aa90ee32418f5bcbaebe4dc.setContent(html_9aff781a4edbe7ec410dc7e1c9dba637);
+            
+        
+
+        marker_d4fca6f17b4c133df88eec76c68a02ea.bindPopup(popup_c5aca0a21aa90ee32418f5bcbaebe4dc)
+        ;
+
+        
+    
+    
+            marker_d4fca6f17b4c133df88eec76c68a02ea.bindTooltip(
+                `<div>
+                     The Dallas Examiner
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d4fca6f17b4c133df88eec76c68a02ea.setIcon(icon_3797096fb2d2c07d7278a51464229e40);
+            
+    
+            var marker_09a811e625db6a74054fcf57152995de = L.marker(
+                [41.4747, -81.6055],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_11bf53f9f26383e7f5d6d852a0aab9f5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6c3cd0cbf1d4f0ed59a1ee1bcadb89d9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_027aebbf1a2a8d3fb83b092887ade1bb = $(`<div id="html_027aebbf1a2a8d3fb83b092887ade1bb" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Cleveland Call and Post</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Cleveland, Ohio</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1928</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.clevelandcallandpost.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_6c3cd0cbf1d4f0ed59a1ee1bcadb89d9.setContent(html_027aebbf1a2a8d3fb83b092887ade1bb);
+            
+        
+
+        marker_09a811e625db6a74054fcf57152995de.bindPopup(popup_6c3cd0cbf1d4f0ed59a1ee1bcadb89d9)
+        ;
+
+        
+    
+    
+            marker_09a811e625db6a74054fcf57152995de.bindTooltip(
+                `<div>
+                     The Cleveland Call and Post
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_09a811e625db6a74054fcf57152995de.setIcon(icon_11bf53f9f26383e7f5d6d852a0aab9f5);
+            
+    
+            var marker_0e2412940c91c311a505e2506cb730ab = L.marker(
+                [39.8089, -86.1156],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_5f0346faa78584d1ce67bfc732be2bcf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0dd6263c344ea07eeb28f1ff3c1977e9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1d6409343da62d5079698b9efef1a542 = $(`<div id="html_1d6409343da62d5079698b9efef1a542" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Indianapolis Recorder</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Indianapolis, Indiana</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1895</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.indianapolisrecorder.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_0dd6263c344ea07eeb28f1ff3c1977e9.setContent(html_1d6409343da62d5079698b9efef1a542);
+            
+        
+
+        marker_0e2412940c91c311a505e2506cb730ab.bindPopup(popup_0dd6263c344ea07eeb28f1ff3c1977e9)
+        ;
+
+        
+    
+    
+            marker_0e2412940c91c311a505e2506cb730ab.bindTooltip(
+                `<div>
+                     The Indianapolis Recorder
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0e2412940c91c311a505e2506cb730ab.setIcon(icon_5f0346faa78584d1ce67bfc732be2bcf);
+            
+    
+            var marker_956757ae4ec60e448c7097c007b6185a = L.marker(
+                [29.9368, -90.1026],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_f7802fe5c9fbed9be9536f7907fedb61 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_313813e7aa5c7f3be59a9cf71ed0e4e2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bacd7fd1a48e68ba4dd2cb5cc9ffe41c = $(`<div id="html_bacd7fd1a48e68ba4dd2cb5cc9ffe41c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The New Orleans Data News Weekly</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> New Orleans, Louisiana</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1966</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.datanewsweekly.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_313813e7aa5c7f3be59a9cf71ed0e4e2.setContent(html_bacd7fd1a48e68ba4dd2cb5cc9ffe41c);
+            
+        
+
+        marker_956757ae4ec60e448c7097c007b6185a.bindPopup(popup_313813e7aa5c7f3be59a9cf71ed0e4e2)
+        ;
+
+        
+    
+    
+            marker_956757ae4ec60e448c7097c007b6185a.bindTooltip(
+                `<div>
+                     The New Orleans Data News Weekly
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_956757ae4ec60e448c7097c007b6185a.setIcon(icon_f7802fe5c9fbed9be9536f7907fedb61);
+            
+    
+            var marker_93d9cdc0ad41ebb2f82fa54c4416c9bd = L.marker(
+                [38.6362, -90.2589],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_1025a3a0018101c234b54e8af8eaf882 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_66b13b410fda582ac71b71ea5b0a0380 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ef310d0f7d528c8c76de9c2eeb150c14 = $(`<div id="html_ef310d0f7d528c8c76de9c2eeb150c14" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The St. Louis American</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> St. Louis, Missouri</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1928</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.stlamerican.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_66b13b410fda582ac71b71ea5b0a0380.setContent(html_ef310d0f7d528c8c76de9c2eeb150c14);
+            
+        
+
+        marker_93d9cdc0ad41ebb2f82fa54c4416c9bd.bindPopup(popup_66b13b410fda582ac71b71ea5b0a0380)
+        ;
+
+        
+    
+    
+            marker_93d9cdc0ad41ebb2f82fa54c4416c9bd.bindTooltip(
+                `<div>
+                     The St. Louis American
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_93d9cdc0ad41ebb2f82fa54c4416c9bd.setIcon(icon_1025a3a0018101c234b54e8af8eaf882);
+            
+    
+            var marker_e15b4feb5dab59156a8220cc0cadbfe3 = L.marker(
+                [35.2074, -80.8715],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_c939a81eac08b2c4ad489c28afc47c03 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7518b9f02df667e500d05ff0324f90f1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8e0d5641445ce01409ca3077a0580d1c = $(`<div id="html_8e0d5641445ce01409ca3077a0580d1c" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Charlotte Post</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Charlotte, North Carolina</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1878</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.thecharlottepost.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_7518b9f02df667e500d05ff0324f90f1.setContent(html_8e0d5641445ce01409ca3077a0580d1c);
+            
+        
+
+        marker_e15b4feb5dab59156a8220cc0cadbfe3.bindPopup(popup_7518b9f02df667e500d05ff0324f90f1)
+        ;
+
+        
+    
+    
+            marker_e15b4feb5dab59156a8220cc0cadbfe3.bindTooltip(
+                `<div>
+                     The Charlotte Post
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e15b4feb5dab59156a8220cc0cadbfe3.setIcon(icon_c939a81eac08b2c4ad489c28afc47c03);
+            
+    
+            var marker_1141ed9c8811941f8c52eec47e9c2ec3 = L.marker(
+                [47.599, -122.2988],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_5e4d60ffb04b6db9495b65a5320fcf53 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8924896f012895a46f246aca9913ecd1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e2dbd7e62cec4462bb93a218a05c0f21 = $(`<div id="html_e2dbd7e62cec4462bb93a218a05c0f21" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Seattle Medium</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Seattle, Washington</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1970</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://seattlemedium.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_8924896f012895a46f246aca9913ecd1.setContent(html_e2dbd7e62cec4462bb93a218a05c0f21);
+            
+        
+
+        marker_1141ed9c8811941f8c52eec47e9c2ec3.bindPopup(popup_8924896f012895a46f246aca9913ecd1)
+        ;
+
+        
+    
+    
+            marker_1141ed9c8811941f8c52eec47e9c2ec3.bindTooltip(
+                `<div>
+                     The Seattle Medium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1141ed9c8811941f8c52eec47e9c2ec3.setIcon(icon_5e4d60ffb04b6db9495b65a5320fcf53);
+            
+    
+            var marker_585f570ff49483f2bf450efc20592999 = L.marker(
+                [40.4301, -79.9875],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_f5781c0f08239b5ebc918f84cc21d713 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5b0c1c9f9b81bd108233371e9141f5aa = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7ff4ae5f781c8df59ef6b9ddf0eb2dc8 = $(`<div id="html_7ff4ae5f781c8df59ef6b9ddf0eb2dc8" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Pittsburgh Courier</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Pittsburgh, Pennsylvania</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1907</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://newpittsburghcourier.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_5b0c1c9f9b81bd108233371e9141f5aa.setContent(html_7ff4ae5f781c8df59ef6b9ddf0eb2dc8);
+            
+        
+
+        marker_585f570ff49483f2bf450efc20592999.bindPopup(popup_5b0c1c9f9b81bd108233371e9141f5aa)
+        ;
+
+        
+    
+    
+            marker_585f570ff49483f2bf450efc20592999.bindTooltip(
+                `<div>
+                     The Pittsburgh Courier
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_585f570ff49483f2bf450efc20592999.setIcon(icon_f5781c0f08239b5ebc918f84cc21d713);
+            
+    
+            var marker_77a6dd08486f50ee86d67dca69abf83e = L.marker(
+                [38.5515, -121.4655],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_11f1fc439b22b6be8c03c72b03c178f4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f58a2916cba20029368be28c6e994359 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5d445be3ec4d689391a0bdc918fc75a7 = $(`<div id="html_5d445be3ec4d689391a0bdc918fc75a7" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Sacramento Observer</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Sacramento, California</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1962</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://sacobserver.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_f58a2916cba20029368be28c6e994359.setContent(html_5d445be3ec4d689391a0bdc918fc75a7);
+            
+        
+
+        marker_77a6dd08486f50ee86d67dca69abf83e.bindPopup(popup_f58a2916cba20029368be28c6e994359)
+        ;
+
+        
+    
+    
+            marker_77a6dd08486f50ee86d67dca69abf83e.bindTooltip(
+                `<div>
+                     The Sacramento Observer
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_77a6dd08486f50ee86d67dca69abf83e.setIcon(icon_11f1fc439b22b6be8c03c72b03c178f4);
+            
+    
+            var marker_62aae3b1061f2161e86484594b295ad6 = L.marker(
+                [38.8457, -76.9941],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_869e93fa7603081f6af7ab40293a9a11 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_62f8b773b4ca1e3a4d98847147dde678 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5c436808c9a782d2a7724d979e8d9cb0 = $(`<div id="html_5c436808c9a782d2a7724d979e8d9cb0" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Washington Informer</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Washington, District of Columbia</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1964</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://www.washingtoninformer.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_62f8b773b4ca1e3a4d98847147dde678.setContent(html_5c436808c9a782d2a7724d979e8d9cb0);
+            
+        
+
+        marker_62aae3b1061f2161e86484594b295ad6.bindPopup(popup_62f8b773b4ca1e3a4d98847147dde678)
+        ;
+
+        
+    
+    
+            marker_62aae3b1061f2161e86484594b295ad6.bindTooltip(
+                `<div>
+                     The Washington Informer
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_62aae3b1061f2161e86484594b295ad6.setIcon(icon_869e93fa7603081f6af7ab40293a9a11);
+            
+    
+            var marker_9dfd807ce1290483bec8e229b70cb99a = L.marker(
+                [35.1427, -90.0498],
+                {
+}
+            ).addTo(map_ff657766c271500b66948f1a2a1ee9ec);
+        
+    
+            var icon_f7176c29b73e8dbf9d82bd9f69d349bb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "newspaper-o",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8e471f9ae85245ccd4472709c5988c94 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9547d49501e011a4932a3e7ba0cdab82 = $(`<div id="html_9547d49501e011a4932a3e7ba0cdab82" style="width: 100.0%; height: 100.0%;">         <div style="font-family: Arial, sans-serif; width: 250px;">             <h4 style="margin: 0 0 10px 0; color: #2c3e50;">The Memphis Tri-State Defender</h4>             <p style="margin: 5px 0;"><strong>Location:</strong> Memphis, Tennessee</p>             <p style="margin: 5px 0;"><strong>Founded:</strong> 1951</p>             <p style="margin: 5px 0;"><strong>Status:</strong> Active</p>             <p style="margin: 5px 0;">                 <a href="https://tri-statedefender.com" target="_blank" style="color: #3498db;">Visit Website</a>             </p>         </div>         </div>`)[0];
+                popup_8e471f9ae85245ccd4472709c5988c94.setContent(html_9547d49501e011a4932a3e7ba0cdab82);
+            
+        
+
+        marker_9dfd807ce1290483bec8e229b70cb99a.bindPopup(popup_8e471f9ae85245ccd4472709c5988c94)
+        ;
+
+        
+    
+    
+            marker_9dfd807ce1290483bec8e229b70cb99a.bindTooltip(
+                `<div>
+                     The Memphis Tri-State Defender
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9dfd807ce1290483bec8e229b70cb99a.setIcon(icon_f7176c29b73e8dbf9d82bd9f69d349bb);
+            
+</script><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script></body>
+    </html>
+    

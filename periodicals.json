@@ -1,0 +1,222 @@
+[
+  {
+    "name": "The Chicago Defender",
+    "city": "Chicago",
+    "state": "Illinois",
+    "address": "4445 S Martin Luther King Dr, Chicago, IL 60653",
+    "latitude": 41.8129,
+    "longitude": -87.6167,
+    "founded_year": 1905,
+    "status": "active",
+    "website": "https://chicagodefender.com"
+  },
+  {
+    "name": "The Amsterdam News",
+    "city": "New York",
+    "state": "New York",
+    "address": "2340 Frederick Douglass Blvd, New York, NY 10027",
+    "latitude": 40.8089,
+    "longitude": -73.9537,
+    "founded_year": 1909,
+    "status": "active",
+    "website": "https://amsterdamnews.com"
+  },
+  {
+    "name": "The Philadelphia Tribune",
+    "city": "Philadelphia",
+    "state": "Pennsylvania",
+    "address": "520 S 16th St, Philadelphia, PA 19146",
+    "latitude": 39.9423,
+    "longitude": -75.1685,
+    "founded_year": 1884,
+    "status": "active",
+    "website": "https://www.phillytrib.com"
+  },
+  {
+    "name": "The Atlanta Daily World",
+    "city": "Atlanta",
+    "state": "Georgia",
+    "address": "145 Auburn Ave NE, Atlanta, GA 30303",
+    "latitude": 33.7558,
+    "longitude": -84.3802,
+    "founded_year": 1928,
+    "status": "active",
+    "website": "https://atlantadailyworld.com"
+  },
+  {
+    "name": "The Afro-American",
+    "city": "Baltimore",
+    "state": "Maryland",
+    "address": "628 N Eutaw St, Baltimore, MD 21201",
+    "latitude": 39.3013,
+    "longitude": -76.6241,
+    "founded_year": 1892,
+    "status": "active",
+    "website": "https://afro.com"
+  },
+  {
+    "name": "Los Angeles Sentinel",
+    "city": "Los Angeles",
+    "state": "California",
+    "address": "3800 Crenshaw Blvd, Los Angeles, CA 90008",
+    "latitude": 34.0097,
+    "longitude": -118.3353,
+    "founded_year": 1933,
+    "status": "active",
+    "website": "https://lasentinel.net"
+  },
+  {
+    "name": "The Houston Defender",
+    "city": "Houston",
+    "state": "Texas",
+    "address": "4131 Almeda Rd, Houston, TX 77004",
+    "latitude": 29.7214,
+    "longitude": -95.3770,
+    "founded_year": 1930,
+    "status": "active",
+    "website": "https://www.houstondefender.com"
+  },
+  {
+    "name": "The Miami Times",
+    "city": "Miami",
+    "state": "Florida",
+    "address": "900 NW 54th St, Miami, FL 33127",
+    "latitude": 25.8238,
+    "longitude": -80.2107,
+    "founded_year": 1923,
+    "status": "active",
+    "website": "https://www.miamitimesonline.com"
+  },
+  {
+    "name": "The Michigan Chronicle",
+    "city": "Detroit",
+    "state": "Michigan",
+    "address": "479 Ledyard St, Detroit, MI 48201",
+    "latitude": 42.3490,
+    "longitude": -83.0628,
+    "founded_year": 1936,
+    "status": "active",
+    "website": "https://michiganchronicle.com"
+  },
+  {
+    "name": "The Dallas Examiner",
+    "city": "Dallas",
+    "state": "Texas",
+    "address": "315 S Peak St, Dallas, TX 75226",
+    "latitude": 32.7762,
+    "longitude": -96.7767,
+    "founded_year": 1986,
+    "status": "active",
+    "website": "https://www.dallasexaminer.com"
+  },
+  {
+    "name": "The Cleveland Call and Post",
+    "city": "Cleveland",
+    "state": "Ohio",
+    "address": "11800 Shaker Blvd, Cleveland, OH 44120",
+    "latitude": 41.4747,
+    "longitude": -81.6055,
+    "founded_year": 1928,
+    "status": "active",
+    "website": "https://www.clevelandcallandpost.com"
+  },
+  {
+    "name": "The Indianapolis Recorder",
+    "city": "Indianapolis",
+    "state": "Indiana",
+    "address": "2901 N Tacoma Ave, Indianapolis, IN 46218",
+    "latitude": 39.8089,
+    "longitude": -86.1156,
+    "founded_year": 1895,
+    "status": "active",
+    "website": "https://www.indianapolisrecorder.com"
+  },
+  {
+    "name": "The New Orleans Data News Weekly",
+    "city": "New Orleans",
+    "state": "Louisiana",
+    "address": "3501 Napoleon Ave, New Orleans, LA 70125",
+    "latitude": 29.9368,
+    "longitude": -90.1026,
+    "founded_year": 1966,
+    "status": "active",
+    "website": "https://www.datanewsweekly.com"
+  },
+  {
+    "name": "The St. Louis American",
+    "city": "St. Louis",
+    "state": "Missouri",
+    "address": "4242 Lindell Blvd, St. Louis, MO 63108",
+    "latitude": 38.6362,
+    "longitude": -90.2589,
+    "founded_year": 1928,
+    "status": "active",
+    "website": "https://www.stlamerican.com"
+  },
+  {
+    "name": "The Charlotte Post",
+    "city": "Charlotte",
+    "state": "North Carolina",
+    "address": "1531 Camden Rd, Charlotte, NC 28203",
+    "latitude": 35.2074,
+    "longitude": -80.8715,
+    "founded_year": 1878,
+    "status": "active",
+    "website": "https://www.thecharlottepost.com"
+  },
+  {
+    "name": "The Seattle Medium",
+    "city": "Seattle",
+    "state": "Washington",
+    "address": "2600 S Jackson St, Seattle, WA 98144",
+    "latitude": 47.5990,
+    "longitude": -122.2988,
+    "founded_year": 1970,
+    "status": "active",
+    "website": "https://seattlemedium.com"
+  },
+  {
+    "name": "The Pittsburgh Courier",
+    "city": "Pittsburgh",
+    "state": "Pennsylvania",
+    "address": "315 E Carson St, Pittsburgh, PA 15219",
+    "latitude": 40.4301,
+    "longitude": -79.9875,
+    "founded_year": 1907,
+    "status": "active",
+    "website": "https://newpittsburghcourier.com"
+  },
+  {
+    "name": "The Sacramento Observer",
+    "city": "Sacramento",
+    "state": "California",
+    "address": "3540 4th Ave, Sacramento, CA 95817",
+    "latitude": 38.5515,
+    "longitude": -121.4655,
+    "founded_year": 1962,
+    "status": "active",
+    "website": "https://sacobserver.com"
+  },
+  {
+    "name": "The Washington Informer",
+    "city": "Washington",
+    "state": "District of Columbia",
+    "address": "3117 Martin Luther King Jr Ave SE, Washington, DC 20032",
+    "latitude": 38.8457,
+    "longitude": -76.9941,
+    "founded_year": 1964,
+    "status": "active",
+    "website": "https://www.washingtoninformer.com"
+  },
+  {
+    "name": "The Memphis Tri-State Defender",
+    "city": "Memphis",
+    "state": "Tennessee",
+    "address": "124 E Calhoun Ave, Memphis, TN 38103",
+    "latitude": 35.1427,
+    "longitude": -90.0498,
+    "founded_year": 1951,
+    "status": "active",
+    "website": "https://tri-statedefender.com"
+  }
+]
